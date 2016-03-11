@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-enum MazeTiles
+public enum MazeTiles
 {
-    Filler, Deadend, Corner, Straight, Junction, Cross
+    Filler, Deadend, Corner, Straight, Junction, Cross, UNDEFINED, Room
 }
 
 enum RoomTiles
@@ -207,6 +207,7 @@ public class Generator : MonoBehaviour {
                 spawnOrientation = 0;
                 newTile = null;
                 currentCell = cells[x, y];
+                MazeTiles mTile = MazeTiles.UNDEFINED;
                 Room currentRoom = null;
                 foreach (Room checkRoom in Rooms)
                 {
@@ -219,6 +220,7 @@ public class Generator : MonoBehaviour {
                 //currentRoom = null;
                 if (currentRoom != null)
                 {
+                    mTile = MazeTiles.Room;
                     RoomTiles tile = currentRoom.CheckPosition(ref spawnOrientation, x, y);
                     if (tile == RoomTiles.Edge)
                     {
@@ -308,27 +310,26 @@ public class Generator : MonoBehaviour {
                 }
                 else
                 {
-                    MazeTiles tile = MazeTiles.Filler;
                     int exits = currentCell.getNumExits();
                     switch (exits)
                     {
                         case 0:
                             //newTile = CoridoorTilePrefabs[(int)MazeTiles.Filler];
-                            tile = MazeTiles.Filler;
+                            // mTile = MazeTiles.Filler;
                             break;
                         case 1:
-                            tile = MazeTiles.Deadend;
+                            mTile = MazeTiles.Deadend;
                             currentCell.getFirstExit(ref spawnOrientation);
                             break;
                         case 2:
                             if (currentCell.Exits == 10 || currentCell.Exits == 5)
                             {
-                                tile = MazeTiles.Straight;
+                                mTile = MazeTiles.Straight;
                                 currentCell.getFirstExit(ref spawnOrientation);
                             }
                             else
                             {
-                                tile = MazeTiles.Corner;
+                                mTile = MazeTiles.Corner;
                                 if (currentCell.Exits == 3)
                                 {
                                     spawnOrientation = 0;
@@ -348,7 +349,7 @@ public class Generator : MonoBehaviour {
                             }
                             break;
                         case 3:
-                            tile = MazeTiles.Junction;
+                            mTile = MazeTiles.Junction;
                             if (currentCell.Exits == 7)
                             {
                                 spawnOrientation = 0;
@@ -367,17 +368,25 @@ public class Generator : MonoBehaviour {
                             }
                             break;
                         case 4:
-                            tile = MazeTiles.Cross;
+                            mTile = MazeTiles.Cross;
                             break;
                         default:
                             newTile = new GameObject("Error Tile");
                             break;
                     }
-                    newTile = CoridoorTilePrefabs[(int)tile];
-                    spawnOrientation = currentCell.getFirstExit(ref spawnOrientation);
+                    if (mTile != MazeTiles.UNDEFINED)
+                    {
+                        newTile = CoridoorTilePrefabs[(int)mTile];
+                        spawnOrientation = currentCell.getFirstExit(ref spawnOrientation);
+                    }
                 }
-                GameObject spawnedTile = (GameObject) Instantiate(newTile, spawnPos, Quaternion.Euler(0f, 90*spawnOrientation ,0f));
-                spawnedTile.name = "(" + x + ", " + y + ") " + newTile.name;
+                if (mTile != MazeTiles.UNDEFINED)
+                {
+                    GameObject spawnedTile = (GameObject) Instantiate(newTile, spawnPos, Quaternion.Euler(0f, 90*spawnOrientation ,0f));
+                    spawnedTile.name = "(" + x + ", " + y + ") " + newTile.name;
+                    GameCell cellinfo = spawnedTile.AddComponent<GameCell>();
+                    cellinfo.Initialize(mTile, currentCell.Exits);
+                }
             }
         }
     }
