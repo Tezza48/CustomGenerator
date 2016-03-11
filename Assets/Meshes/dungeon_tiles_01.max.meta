@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: 94f962ac756880c4ab7c19cd8ba4087a
+timeCreated: 1456934432
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: dungeon_corner_open_v1
+    100002: dungeon_corner_v1
+    100004: dungeon_cross_v1
+    100006: dungeon_deadend_v1
+    100008: dungeon_filler_v1
+    100010: dungeon_junction_v1
+    100012: dungeon_open_1_v1
+    100014: dungeon_open_2a_v1
+    100016: dungeon_open_2b_v1
+    100018: dungeon_open_3_v1
+    100020: dungeon_open_floor_v1
+    100022: dungeon_open_wall
+    100024: dungeon_open_wall_1pillar_a_v1
+    100026: dungeon_open_wall_1pillar_b_v1
+    100028: dungeon_straight_v1
+    100030: dungeon_TEMPLATE
+    100032: //RootNode
+    400000: dungeon_corner_open_v1
+    400002: dungeon_corner_v1
+    400004: dungeon_cross_v1
+    400006: dungeon_deadend_v1
+    400008: dungeon_filler_v1
+    400010: dungeon_junction_v1
+    400012: dungeon_open_1_v1
+    400014: dungeon_open_2a_v1
+    400016: dungeon_open_2b_v1
+    400018: dungeon_open_3_v1
+    400020: dungeon_open_floor_v1
+    400022: dungeon_open_wall
+    400024: dungeon_open_wall_1pillar_a_v1
+    400026: dungeon_open_wall_1pillar_b_v1
+    400028: dungeon_straight_v1
+    400030: dungeon_TEMPLATE
+    400032: //RootNode
+    2300000: dungeon_corner_open_v1
+    2300002: dungeon_corner_v1
+    2300004: dungeon_cross_v1
+    2300006: dungeon_deadend_v1
+    2300008: dungeon_filler_v1
+    2300010: dungeon_junction_v1
+    2300012: dungeon_open_1_v1
+    2300014: dungeon_open_2a_v1
+    2300016: dungeon_open_2b_v1
+    2300018: dungeon_open_3_v1
+    2300020: dungeon_open_floor_v1
+    2300022: dungeon_open_wall
+    2300024: dungeon_open_wall_1pillar_a_v1
+    2300026: dungeon_open_wall_1pillar_b_v1
+    2300028: dungeon_straight_v1
+    2300030: dungeon_TEMPLATE
+    3300000: dungeon_corner_open_v1
+    3300002: dungeon_corner_v1
+    3300004: dungeon_cross_v1
+    3300006: dungeon_deadend_v1
+    3300008: dungeon_filler_v1
+    3300010: dungeon_junction_v1
+    3300012: dungeon_open_1_v1
+    3300014: dungeon_open_2a_v1
+    3300016: dungeon_open_2b_v1
+    3300018: dungeon_open_3_v1
+    3300020: dungeon_open_floor_v1
+    3300022: dungeon_open_wall
+    3300024: dungeon_open_wall_1pillar_a_v1
+    3300026: dungeon_open_wall_1pillar_b_v1
+    3300028: dungeon_straight_v1
+    3300030: dungeon_TEMPLATE
+    4300000: dungeon_TEMPLATE
+    4300002: dungeon_straight_v1
+    4300004: dungeon_deadend_v1
+    4300006: dungeon_cross_v1
+    4300008: dungeon_corner_v1
+    4300010: dungeon_junction_v1
+    4300012: dungeon_filler_v1
+    4300014: dungeon_open_1_v1
+    4300016: dungeon_open_2a_v1
+    4300018: dungeon_open_2b_v1
+    4300020: dungeon_open_3_v1
+    4300022: dungeon_open_wall
+    4300024: dungeon_open_floor_v1
+    4300026: dungeon_open_wall_1pillar_a_v1
+    4300028: dungeon_open_wall_1pillar_b_v1
+    4300030: dungeon_corner_open_v1
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
