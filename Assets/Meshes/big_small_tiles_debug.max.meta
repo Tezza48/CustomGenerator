@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: 3654619ceb503a745a878067207d04d8
+timeCreated: 1459908820
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: big_filler
+    100002: big_floor
+    100004: //RootNode
+    100006: med_filler
+    100008: med_floor
+    100010: med_wall
+    100012: small_cap
+    100014: small_corner
+    100016: small_cross
+    100018: small_floor
+    100020: small_pillar
+    100022: small_tjunc
+    100024: small_wall
+    100026: small_filler
+    400000: big_filler
+    400002: big_floor
+    400004: //RootNode
+    400006: med_filler
+    400008: med_floor
+    400010: med_wall
+    400012: small_cap
+    400014: small_corner
+    400016: small_cross
+    400018: small_floor
+    400020: small_pillar
+    400022: small_tjunc
+    400024: small_wall
+    400026: small_filler
+    2300000: big_filler
+    2300002: big_floor
+    2300004: med_filler
+    2300006: med_floor
+    2300008: med_wall
+    2300010: small_cap
+    2300012: small_corner
+    2300014: small_cross
+    2300016: small_floor
+    2300018: small_pillar
+    2300020: small_tjunc
+    2300022: small_wall
+    2300024: small_filler
+    3300000: big_filler
+    3300002: big_floor
+    3300004: med_filler
+    3300006: med_floor
+    3300008: med_wall
+    3300010: small_cap
+    3300012: small_corner
+    3300014: small_cross
+    3300016: small_floor
+    3300018: small_pillar
+    3300020: small_tjunc
+    3300022: small_wall
+    3300024: small_filler
+    4300000: small_pillar
+    4300002: big_floor
+    4300004: med_floor
+    4300006: med_wall
+    4300008: small_cap
+    4300010: small_corner
+    4300012: small_tjunc
+    4300014: small_cross
+    4300016: small_floor
+    4300018: big_filler
+    4300020: med_filler
+    4300022: small_wall
+    4300024: small_filler
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

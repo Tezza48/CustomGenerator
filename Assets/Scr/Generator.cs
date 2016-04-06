@@ -5,10 +5,17 @@ using System.Collections.Generic;
 
 public enum MazeTiles
 {
-    Filler, Deadend, Corner, Straight, Junction, Cross, UNDEFINED, Room
+    Filler,
+    Deadend,
+    Corner,
+    Straight,
+    Junction,
+    Cross,
+    UNDEFINED,
+    Room
 }
 
-enum RoomTiles
+public enum RoomTiles
 {
     Centre,
     Edge,
@@ -208,6 +215,7 @@ public class Generator : MonoBehaviour {
                 newTile = null;
                 currentCell = cells[x, y];
                 MazeTiles mTile = MazeTiles.UNDEFINED;
+                RoomTiles tile = RoomTiles.UNDEFINED;
                 Room currentRoom = null;
                 foreach (Room checkRoom in Rooms)
                 {
@@ -217,11 +225,11 @@ public class Generator : MonoBehaviour {
                         break;
                     }
                 }
-                //currentRoom = null;
+                currentRoom = null;
                 if (currentRoom != null)
                 {
                     mTile = MazeTiles.Room;
-                    RoomTiles tile = currentRoom.CheckPosition(ref spawnOrientation, x, y);
+                    tile = currentRoom.CheckPosition(ref spawnOrientation, x, y);
                     if (tile == RoomTiles.Edge)
                     {
                         // the orientation is the bit we need to check -1

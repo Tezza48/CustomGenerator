@@ -8,5 +8,6 @@ public class GameCell : MonoBehaviour {
     {
         cell = _cell;
         exits = _exits;
+
     }
 }

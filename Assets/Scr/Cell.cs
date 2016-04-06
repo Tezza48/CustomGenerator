@@ -1,4 +1,7 @@
-﻿enum Exit { NONE = 0, Up = 1, Right = 2, Down = 4, Left = 8 }
+﻿using System;
+
+[Flags]
+enum Exit { NONE = 0, Up = 1, Right = 2, Down = 4, Left = 8 }
 enum InverseExit { Up = 4, Right = 8, Down = 1, Left = 2 }
 
 class Cell
