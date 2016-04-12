@@ -3,7 +3,7 @@ guid: db28dc3aed5d2e3438facce6c2ef6567
 timeCreated: 1459908211
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 18
   fileIDToRecycleName:
     100000: big_filler
     100002: big_floor
@@ -17,6 +17,8 @@ ModelImporter:
     100018: small_floor
     100020: small_pillar
     100022: small_tjunc
+    100024: small_wall
+    100026: small_filler
     400000: big_filler
     400002: big_floor
     400004: //RootNode
@@ -29,6 +31,8 @@ ModelImporter:
     400018: small_floor
     400020: small_pillar
     400022: small_tjunc
+    400024: small_wall
+    400026: small_filler
     2300000: big_filler
     2300002: big_floor
     2300004: med_filler
@@ -40,6 +44,8 @@ ModelImporter:
     2300016: small_floor
     2300018: small_pillar
     2300020: small_tjunc
+    2300022: small_wall
+    2300024: small_filler
     3300000: big_filler
     3300002: big_floor
     3300004: med_filler
@@ -51,6 +57,8 @@ ModelImporter:
     3300016: small_floor
     3300018: small_pillar
     3300020: small_tjunc
+    3300022: small_wall
+    3300024: small_filler
     4300000: small_pillar
     4300002: big_floor
     4300004: med_floor
@@ -62,6 +70,8 @@ ModelImporter:
     4300016: small_floor
     4300018: big_filler
     4300020: med_filler
+    4300022: small_wall
+    4300024: small_filler
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -70,7 +80,6 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -78,9 +87,9 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: 0.5
-    animationPositionError: 0.5
-    animationScaleError: 0.5
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
@@ -104,6 +113,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
@@ -111,12 +121,12 @@ ModelImporter:
   humanDescription:
     human: []
     skeleton: []
-    armTwist: 0.5
-    foreArmTwist: 0.5
-    upperLegTwist: 0.5
-    legTwist: 0.5
-    armStretch: 0.05
-    legStretch: 0.05
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0

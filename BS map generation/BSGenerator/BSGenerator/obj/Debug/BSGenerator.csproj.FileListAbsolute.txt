@@ -1,0 +1,6 @@
+D:\tezza\Documents\University\Uni Year Two\Digital Scripting\CustomGenerator\BS map generation\BSGenerator\BSGenerator\bin\Debug\BSGenerator.exe.config
+D:\tezza\Documents\University\Uni Year Two\Digital Scripting\CustomGenerator\BS map generation\BSGenerator\BSGenerator\obj\Debug\BSGenerator.csprojResolveAssemblyReference.cache
+D:\tezza\Documents\University\Uni Year Two\Digital Scripting\CustomGenerator\BS map generation\BSGenerator\BSGenerator\bin\Debug\BSGenerator.exe
+D:\tezza\Documents\University\Uni Year Two\Digital Scripting\CustomGenerator\BS map generation\BSGenerator\BSGenerator\bin\Debug\BSGenerator.pdb
+D:\tezza\Documents\University\Uni Year Two\Digital Scripting\CustomGenerator\BS map generation\BSGenerator\BSGenerator\obj\Debug\BSGenerator.exe
+D:\tezza\Documents\University\Uni Year Two\Digital Scripting\CustomGenerator\BS map generation\BSGenerator\BSGenerator\obj\Debug\BSGenerator.pdb
