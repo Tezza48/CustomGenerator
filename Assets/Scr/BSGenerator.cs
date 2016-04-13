@@ -55,7 +55,7 @@ public class BSGenerator : MonoBehaviour
     private int spawnInterval;
 
     private List<iRect> rooms = new List<iRect>();
-    private List<Line> coridors = new List<Line>();
+    private List<iLine> coridors = new List<iLine>();
     private List<GameObject> spawnedTiles = new List<GameObject>();
     private int[,] cells;//bit flag for cardinal the wall is on NESW 8421
 
@@ -84,7 +84,7 @@ public class BSGenerator : MonoBehaviour
         }
         spawnedTiles = new List<GameObject>();
         rooms = new List<iRect>();
-        coridors = new List<Line>();
+        coridors = new List<iLine>();
     }
 
     public void MakeEmptyRoom()
@@ -246,7 +246,31 @@ public class BSGenerator : MonoBehaviour
     {
         for (int i = 1; i < rooms.Count; i++)
         {
-            coridors.Add(new Line(rooms[i-1].Centre, rooms[i].Centre));
+            coridors.Add(new iLine(rooms[i-1].Centre, rooms[i].Centre));
+        }
+        foreach (iLine currentCoridor in coridors)
+        {
+            if (currentCoridor.isHorizFirst())
+            {
+                if (currentCoridor.hasPositiveDelta())
+                {
+                    for (int x = currentCoridor.Start[0]; x < currentCoridor.End[0]; x++)
+                    {
+                        int realX = x * 2;
+                        //12_
+                        //3__
+                        //45_
+                        cells[realX - 1, currentCoridor.Start[1] * 2 - 1] |= 2;
+                        cells[realX, currentCoridor.Start[1] * 2 - 1] |= 2;
+                        //cells[realX + 1, currentCoridor.Start[1] * 2 - 1] |= 2;
+
+                        cells[realX - 1, currentCoridor.Start[1] * 2] = 0;
+
+                        cells[realX - 1, currentCoridor.Start[1] * 2 + 1] |= 8;
+                        cells[realX, currentCoridor.Start[1] * 2 + 1] |= 8;
+                    }
+                }
+            }
         }
     }
 
