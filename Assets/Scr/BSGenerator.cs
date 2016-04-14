@@ -250,27 +250,69 @@ public class BSGenerator : MonoBehaviour
         }
         foreach (iLine currentCoridor in coridors)
         {
-            if (currentCoridor.isHorizFirst())
+            int[] start = currentCoridor.Start;
+            int[] end = currentCoridor.End;
+
+            // always go horiz first
+            if (start[0] > end[0])
             {
-                if (currentCoridor.hasPositiveDelta())
+                for (int x = start[0]; x < end[0]; x++)
                 {
-                    for (int x = currentCoridor.Start[0]; x < currentCoridor.End[0]; x++)
-                    {
-                        int realX = x * 2;
-                        //12_
-                        //3__
-                        //45_
-                        cells[realX - 1, currentCoridor.Start[1] * 2 - 1] |= 2;
-                        cells[realX, currentCoridor.Start[1] * 2 - 1] |= 2;
-                        //cells[realX + 1, currentCoridor.Start[1] * 2 - 1] |= 2;
-
-                        cells[realX - 1, currentCoridor.Start[1] * 2] = 0;
-
-                        cells[realX - 1, currentCoridor.Start[1] * 2 + 1] |= 8;
-                        cells[realX, currentCoridor.Start[1] * 2 + 1] |= 8;
-                    }
+                    cells[x * 2, start[1] * 2 + 1] = 1;
+                    cells[x * 2, start[1] * 2 - 1] = 1;
                 }
             }
+            else
+            {
+                for (int x = start[0]; x > end[0]; x--)
+                {
+                    cells[x * 2, start[1] * 2 + 1] = 1;
+                    cells[x * 2, start[1] * 2 - 1] = 1;
+                }
+            }
+
+            if (start[1] > end[1])
+            {
+
+            }
+            else
+            {
+
+            }
+
+            //if (currentCoridor.isHorizFirst())
+            //{
+            //    if (currentCoridor.hasPositiveDelta())
+            //    {
+            //        for (int x = currentCoridor.Start[0]; x < currentCoridor.End[0]; x++)
+            //        {
+            //            int realX = x * 2;
+            //            //12_
+            //            //3__
+            //            //45_
+            //            //cells[realX - 1, currentCoridor.Start[1] * 2 - 1] |= 2;
+            //            //cells[realX, currentCoridor.Start[1] * 2 - 1] |= 2;
+            //            //cells[realX + 1, currentCoridor.Start[1] * 2 - 1] |= 2;
+
+            //            cells[x * 2 - 1, currentCoridor.Start[1] * 2] = 0;
+
+            //            //cells[realX - 1, currentCoridor.Start[1] * 2 + 1] |= 8;
+            //            //cells[realX, currentCoridor.Start[1] * 2 + 1] |= 8;
+            //        }
+            //        //y
+            //        for (int x = currentCoridor.Start[0]; x > currentCoridor.End[0]; x--)
+            //        {
+            //            cells[x * 2 - 1, currentCoridor.Start[1] * 2] = 0;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        for (int x = currentCoridor.Start[0]; x > currentCoridor.End[0]; x--)
+            //        {
+            //            cells[x * 2 - 1, currentCoridor.Start[1] * 2] = 0;
+            //        }
+            //    }
+            //}
         }
     }
 
