@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+[Serializable]
 public class iRect
 {
     private int x, y, w, h;
@@ -24,7 +25,7 @@ public class iRect
     public int xMax { get { return x + w+1; } }
     public int yMax { get { return y + h+1; } }
 
-    public int[] Centre { get { return new int[] { w / 2, h / 2 }; } }
+    public int[] Centre { get { return new int[] { x + (w / 2), y + (h / 2) }; } }
 
     public iRect ()
     {
