@@ -54,8 +54,8 @@ public class BSGenerator : MonoBehaviour
     #region Private_Variables
     private int spawnInterval;
 
-    private List<iRect> rooms = new List<iRect>();
-    private List<iLine> coridors = new List<iLine>();
+    private List<Rect> rooms = new List<Rect>();
+    private List<Line> coridors = new List<Line>();
     private List<GameObject> spawnedTiles = new List<GameObject>();
     private int[,] cells;//bit flag for cardinal the wall is on NESW 8421
 
@@ -83,43 +83,43 @@ public class BSGenerator : MonoBehaviour
             Destroy(currentTile);
         }
         spawnedTiles = new List<GameObject>();
-        rooms = new List<iRect>();
-        coridors = new List<iLine>();
+        rooms = new List<Rect>();
+        coridors = new List<Line>();
     }
 
-    public void MakeEmptyRoom()
-    {
-        DeleteGrid();
-        //initialize cells
-        InnitCells(ref cells);
-        //make one big room
-        //rooms coordinates just point to big cells
-        iRect room = new iRect(0, 0, width, height);//rectangle that's one less than the size of the array leaving a big tile and a small tile on the border
-        rooms.Add(room);
+    //public void MakeEmptyRoom()
+    //{
+    //    DeleteGrid();
+    //    //initialize cells
+    //    InnitCells(ref cells);
+    //    //make one big room
+    //    //rooms coordinates just point to big cells
+    //    Rect room = new Rect(0, 0, width, height);//rectangle that's one less than the size of the array leaving a big tile and a small tile on the border
+    //    rooms.Add(room);
 
-        #region Manual_Room_Setting
-        //make the cells on the borders into walls
-        for (int x = room.X; x < room.xMax - 1; x++)
-        {
-            cells[x * 2, room.Y * 2] |= 8;//small
-            cells[x * 2 + 1, room.Y * 2] |= 8;//med
+    //    #region Manual_Room_Setting
+    //    //make the cells on the borders into walls
+    //    for (int x = (int)room.xMin; x < room.xMax - 1; x++)
+    //    {
+    //        cells[x * 2, room.Y * 2] |= 8;//small
+    //        cells[x * 2 + 1, room.Y * 2] |= 8;//med
 
-            cells[x * 2, (room.yMax - 1) * 2] |= 2;
-            cells[x * 2 + 1, (room.yMax - 1) * 2] |= 2;
-        }
-        for (int y = room.Y; y < room.yMax - 1; y++)
-        {
-            cells[room.X * 2, y * 2] |= 4;
-            cells[room.X * 2, y * 2 + 1] |= 4;
+    //        cells[x * 2, (room.yMax - 1) * 2] |= 2;
+    //        cells[x * 2 + 1, (room.yMax - 1) * 2] |= 2;
+    //    }
+    //    for (int y = room.Y; y < room.yMax - 1; y++)
+    //    {
+    //        cells[room.x * 2, y * 2] |= 4;
+    //        cells[room.X * 2, y * 2 + 1] |= 4;
 
-            cells[(room.xMax - 1) * 2, y * 2] |= 1;
-            cells[(room.xMax - 1) * 2, y * 2 + 1] |= 1;
-        }
-        cells[(room.xMax - 1) * 2, (room.xMax - 1) * 2] |= 3;//last corner
-        #endregion
+    //        cells[(room.xMax - 1) * 2, y * 2] |= 1;
+    //        cells[(room.xMax - 1) * 2, y * 2 + 1] |= 1;
+    //    }
+    //    cells[(room.xMax - 1) * 2, (room.xMax - 1) * 2] |= 3;//last corner
+    //    #endregion
 
-        InitialiseTiles(cells);
-    }
+    //    InitialiseTiles(cells);
+    //}
 
     public void SpawnRooms()
     {
@@ -186,7 +186,7 @@ public class BSGenerator : MonoBehaviour
                 int roomWidth = Random.Range(minRoomSize, maxRoomSize);
                 int roomHeight = Random.Range(minRoomSize, maxRoomSize);
 
-                iRect newRoom = new iRect(xPos, yPos, roomWidth, roomHeight);
+                Rect newRoom = new Rect(xPos, yPos, roomWidth, roomHeight);
 
                 if (xPos + roomWidth > width || yPos + roomHeight > height)
                 {
@@ -194,9 +194,9 @@ public class BSGenerator : MonoBehaviour
                 }
 
                 bool isValid = true;
-                foreach (iRect currentRoom in rooms)
+                foreach (Rect currentRoom in rooms)
                 {
-                    if (iRect.Intersects(newRoom, currentRoom))
+                    if (newRoom.Overlaps(currentRoom))
                     {
                         isValid = false;
                         break;
@@ -216,27 +216,27 @@ public class BSGenerator : MonoBehaviour
         if (writeToCells)
         {
             #region Write_Rooms_To_Cells
-            foreach (iRect currentRoom in rooms)
+            foreach (Rect currentRoom in rooms)
             {
 
                 //make the cells on the borders into walls
-                for (int x = currentRoom.X; x < currentRoom.xMax - 1; x++)
+                for (int x = (int)currentRoom.x; x < currentRoom.xMax - 1; x++)
                 {
-                    cells[x * 2, currentRoom.Y * 2] |= 8;//small
-                    cells[x * 2 + 1, currentRoom.Y * 2] |= 8;//med
+                    cells[x * 2, (int)currentRoom.y * 2] |= 8;//small
+                    cells[x * 2 + 1, (int)currentRoom.y * 2] |= 8;//med
 
-                    cells[x * 2, (currentRoom.yMax - 1) * 2] |= 2;
-                    cells[x * 2 + 1, (currentRoom.yMax - 1) * 2] |= 2;
+                    cells[x * 2, ((int)currentRoom.yMax - 1) * 2] |= 2;
+                    cells[x * 2 + 1, ((int)currentRoom.yMax - 1) * 2] |= 2;
                 }
-                for (int y = currentRoom.Y; y < currentRoom.yMax - 1; y++)
+                for (int y = (int)currentRoom.y; y < currentRoom.yMax - 1; y++)
                 {
-                    cells[currentRoom.X * 2, y * 2] |= 4;
-                    cells[currentRoom.X * 2, y * 2 + 1] |= 4;
+                    cells[(int)currentRoom.x * 2, y * 2] |= 4;
+                    cells[(int)currentRoom.x * 2, y * 2 + 1] |= 4;
 
-                    cells[(currentRoom.xMax - 1) * 2, y * 2] |= 1;
-                    cells[(currentRoom.xMax - 1) * 2, y * 2 + 1] |= 1;
+                    cells[((int)currentRoom.xMax - 1) * 2, y * 2] |= 1;
+                    cells[((int)currentRoom.xMax - 1) * 2, y * 2 + 1] |= 1;
                 }
-                cells[(currentRoom.xMax - 1) * 2, (currentRoom.yMax - 1) * 2] |= 3;//last corner
+                cells[((int)currentRoom.xMax - 1) * 2, ((int)currentRoom.yMax - 1) * 2] |= 3;//last corner
             }
             #endregion
         }
@@ -244,53 +244,32 @@ public class BSGenerator : MonoBehaviour
 
     private void MakeCoridors(ref int[,] _cells)
     {
-        for (int i = 1; i < rooms.Count; i++)
+        for (int i = 1; i < rooms.Count - 1; i++)
         {
-            coridors.Add(new iLine(rooms[i-1].Centre, rooms[i].Centre));
+            //horiz first
+            Vector2 corner = new Vector2(rooms[i].x, rooms[i-1].y);
+
+            //make a horizontal coridor
+            coridors.Add(new Line(rooms[i - 1].center, corner, true));
+            //then make the vertical component
+            coridors.Add(new Line(corner, rooms[i].center, false));
         }
-
-        foreach (iLine item in coridors)
+        //write to the cells.
+        foreach (Line coridor in coridors)
         {
-            Debug.DrawLine(new Vector3(item.Start[0] * spawnInterval * 2, 0, item.Start[1] * spawnInterval * 2), new Vector3(item.End[0] * spawnInterval * 2, 0, item.End[1] * spawnInterval * 2), Color.black, 3f, false);
-        }
-
-        foreach (iLine currentCoridor in coridors)
-        {
-            int[] start = currentCoridor.Start;
-            int[] end = currentCoridor.End;
-
-            // always go horiz first
-            if (start[0] > end[0])
+            //write here, here and here
+            if (coridor.IsHoriz)
             {
-                for (int x = start[0]; x < end[0]; x++)
+                for (int x = (int)coridor.O1.x; x < coridor.O2.x; x++)
                 {
-                    cells[x * 2 + 1, start[1] * 2 + 2] |= 2;
-                    cells[x * 2 + 1, start[1] * 2 - 0] |= 8;
+                    
                 }
             }
             else
             {
-                for (int x = start[0]; x > end[0]; x--)
+                for (int y = (int)coridor.O1.y; y < coridor.O2.y; y++)
                 {
-                    cells[x * 2 + 1, start[1] * 2 + 2] |= 2;
-                    cells[x * 2 + 1, start[1] * 2 - 0] |= 8;
-                }
-            }
 
-            if (start[1] > end[1])
-            {
-                for (int y = start[1]; y < end[1]; y++)
-                {
-                    cells[end[0] * 2 + 2, y * 2 + 1] |= 1;
-                    cells[end[0] * 2 - 0, y * 2 + 1] |= 4;
-                }
-            }
-            else
-            {
-                for (int y = start[0]; y > end[0]; y--)
-                {
-                    cells[end[0] * 2 + 2, y * 2 + 1] |= 1;
-                    cells[end[0] * 2 - 0, y * 2 + 1] |= 4;
                 }
             }
         }
