@@ -260,9 +260,31 @@ public class BSGenerator : MonoBehaviour
             //write here, here and here
             if (coridor.IsHoriz)
             {
-                for (int x = (int)coridor.O1.x; x < coridor.O2.x; x++)
+                int y = (int)coridor.O1.y;
+
+                //need to re think because it's gonna not work at starts and ends as it dosn't know what coridor's connected to what
+
+                cells[(int)coridor.O1.x * 2 - 1, y * 2 - 1] = 0;
+                cells[(int)coridor.O1.x * 2 - 1, y * 2] = 0;
+                cells[(int)coridor.O1.x * 2 - 1, y * 2 + 1] = 0;
+                cells[(int)coridor.O1.x * 2, y * 2 - 1] = 0;
+                cells[(int)coridor.O1.x * 2, y * 2] = 0;
+                cells[(int)coridor.O1.x * 2, y * 2 + 1] = 0;
+                cells[(int)coridor.O1.x * 2 + 1, y * 2 + 1] = 0;
+                cells[(int)coridor.O1.x * 2 + 1, y * 2] = 0;
+                cells[(int)coridor.O1.x * 2 + 1, y * 2 - 1] = 0;
+
+                for (int x = (int)coridor.O1.x+1; x < coridor.O2.x-1; x++)
                 {
-                    
+                    cells[x * 2-1, y * 2-1] = 1;
+                    cells[x * 2-1, y * 2] = 0;
+                    cells[x * 2-1, y * 2+1] = 1;
+                    cells[x * 2, y * 2-1] = 1;
+                    cells[x * 2, y * 2] = 0;
+                    cells[x * 2, y * 2+1] = 1;
+                    cells[x * 2+1, y * 2-1] = 1;
+                    cells[x * 2+1, y * 2] = 0;
+                    cells[x * 2+1, y * 2+1] = 1;
                 }
             }
             else
