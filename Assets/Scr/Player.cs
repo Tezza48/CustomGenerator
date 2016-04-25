@@ -38,49 +38,33 @@ public class Player : MonoBehaviour {
 
     private void ActionRight()
     {
-        RaycastHit ray;
-        if (Physics.Raycast(transform.position, Vector3.right, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (!Physics.Raycast(transform.position, Vector3.right, BSGenerator.SPAWN_INTERVAL * 2))
         {
-            if (ray.collider.tag != "Wall")
-            {
-                transform.position += Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
-            }
+            transform.position += Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionLeft()
     {
-        RaycastHit ray;
-        if (Physics.Raycast(transform.position, -Vector3.right, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (!Physics.Raycast(transform.position, -Vector3.right, BSGenerator.SPAWN_INTERVAL * 2))
         {
-            if (ray.collider.tag != "Wall")
-            {
-                transform.position -= Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
-            }
+            transform.position -= Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionDown()
     {
-        RaycastHit ray;
-        if (Physics.Raycast(transform.position, -Vector3.up, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (!Physics.Raycast(transform.position, -Vector3.forward, BSGenerator.SPAWN_INTERVAL * 2))
         {
-            if (ray.collider.tag != "Wall")
-            {
-                transform.position -= Vector3.up * BSGenerator.SPAWN_INTERVAL * 2;
-            }
+            transform.position -= Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionUp()
     {
-        RaycastHit ray;
-        if (Physics.Raycast(transform.position, Vector3.up, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (!Physics.Raycast(transform.position, Vector3.forward, BSGenerator.SPAWN_INTERVAL * 2))
         {
-            if (ray.collider.tag != "Wall")
-            {
-                transform.position += Vector3.up * BSGenerator.SPAWN_INTERVAL * 2;
-            }
+            transform.position += Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
         }
     }
 }

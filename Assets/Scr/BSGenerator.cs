@@ -54,6 +54,7 @@ public class BSGenerator : MonoBehaviour
 
     [Header("Gameplay Assets")]
     public GameObject PlayerPrefab;
+    public GameObject ExitPrefab;
 
     public static int SPAWN_INTERVAL;
     #endregion
