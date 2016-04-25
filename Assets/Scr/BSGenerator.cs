@@ -87,39 +87,38 @@ public class BSGenerator : MonoBehaviour
         coridors = new List<Line>();
     }
 
-    //public void MakeEmptyRoom()
-    //{
-    //    DeleteGrid();
-    //    //initialize cells
-    //    InnitCells(ref cells);
-    //    //make one big room
-    //    //rooms coordinates just point to big cells
-    //    Rect room = new Rect(0, 0, width, height);//rectangle that's one less than the size of the array leaving a big tile and a small tile on the border
-    //    rooms.Add(room);
+    public void MakeEmptyRoom()
+    {
+        DeleteGrid();
+        //initialize cells
+        InnitCells(ref cells);
+        //make one big room
+        //rooms coordinates just point to big cells
+        Rect room = new Rect(0, 0, width, height);//rectangle that's one less than the size of the array leaving a big tile and a small tile on the border
+        rooms.Add(room);
 
-    //    #region Manual_Room_Setting
-    //    //make the cells on the borders into walls
-    //    for (int x = (int)room.xMin; x < room.xMax - 1; x++)
-    //    {
-    //        cells[x * 2, room.Y * 2] |= 8;//small
-    //        cells[x * 2 + 1, room.Y * 2] |= 8;//med
+        #region Manual_Room_Setting
+        //make the cells on the borders into walls
+        foreach (Rect currentRoom in rooms)
+        {
 
-    //        cells[x * 2, (room.yMax - 1) * 2] |= 2;
-    //        cells[x * 2 + 1, (room.yMax - 1) * 2] |= 2;
-    //    }
-    //    for (int y = room.Y; y < room.yMax - 1; y++)
-    //    {
-    //        cells[room.x * 2, y * 2] |= 4;
-    //        cells[room.X * 2, y * 2 + 1] |= 4;
+            //make the cells on the borders into walls
+            for (int x = (int)currentRoom.x; x < currentRoom.xMax; x++)
+            {
+                for (int y = (int)currentRoom.y; y < currentRoom.yMax; y++)
+                {
+                    cells[x * 2 + 1, y * 2 + 1] = 0;
+                    //cells[x * 2 + 1, y * 2] = 0;
+                    //cells[x * 2, y * 2 + 1] = 0;
+                    //cells[x * 2 + 1, y * 2 + 1] = 0;
+                }
+            }
+            cells[((int)currentRoom.xMax - 1) * 2, ((int)currentRoom.yMax - 1) * 2] = 1;//last corner
+        }
+        #endregion
 
-    //        cells[(room.xMax - 1) * 2, y * 2] |= 1;
-    //        cells[(room.xMax - 1) * 2, y * 2 + 1] |= 1;
-    //    }
-    //    cells[(room.xMax - 1) * 2, (room.xMax - 1) * 2] |= 3;//last corner
-    //    #endregion
-
-    //    InitialiseTiles(cells);
-    //}
+        InitialiseTiles(cells);
+    }
 
     public void SpawnRooms()
     {
@@ -168,7 +167,7 @@ public class BSGenerator : MonoBehaviour
         {
             for (int x = 0; x < width * 2 + 1; x++)
             {
-                _cells[x, y] = 0;
+                _cells[x, y] = 1;
             }
         }
     }
@@ -220,23 +219,26 @@ public class BSGenerator : MonoBehaviour
             {
 
                 //make the cells on the borders into walls
-                for (int x = (int)currentRoom.x; x < currentRoom.xMax - 1; x++)
+                for (int x = (int)currentRoom.x; x < currentRoom.xMax; x++)
                 {
-                    cells[x * 2, (int)currentRoom.y * 2] |= 8;//small
-                    cells[x * 2 + 1, (int)currentRoom.y * 2] |= 8;//med
+                    for (int y = (int)currentRoom.y; y < currentRoom.yMax; y++)
+                    {
+                        cells[x * 2+1, y * 2+1] = 0;
+                        if (x > currentRoom.xMin)
+                        {
+                            cells[x * 2, y * 2 + 1] = 0;
+                        }
+                        if (y > currentRoom.yMin)
+                        {
+                            cells[x * 2 + 1, y * 2] = 0;
+                        }
+                        if (x > currentRoom.xMin && y > currentRoom.yMin)
+                        {
 
-                    cells[x * 2, ((int)currentRoom.yMax - 1) * 2] |= 2;
-                    cells[x * 2 + 1, ((int)currentRoom.yMax - 1) * 2] |= 2;
+                            cells[x * 2, y * 2] = 0;
+                        }
+                    }
                 }
-                for (int y = (int)currentRoom.y; y < currentRoom.yMax - 1; y++)
-                {
-                    cells[(int)currentRoom.x * 2, y * 2] |= 4;
-                    cells[(int)currentRoom.x * 2, y * 2 + 1] |= 4;
-
-                    cells[((int)currentRoom.xMax - 1) * 2, y * 2] |= 1;
-                    cells[((int)currentRoom.xMax - 1) * 2, y * 2 + 1] |= 1;
-                }
-                cells[((int)currentRoom.xMax - 1) * 2, ((int)currentRoom.yMax - 1) * 2] |= 3;//last corner
             }
             #endregion
         }
@@ -244,15 +246,24 @@ public class BSGenerator : MonoBehaviour
 
     private void MakeCoridors(ref int[,] _cells)
     {
-        for (int i = 1; i < rooms.Count - 1; i++)
+        for (int i = 1; i < rooms.Count; i++)
         {
+
             //horiz first
-            Vector2 corner = new Vector2(rooms[i].x, rooms[i-1].y);
+            Vector2 start = new Vector2(Mathf.Floor(rooms[i - 1].center.x), Mathf.Floor(rooms[i - 1].center.y));
+            Vector2 end = new Vector2(Mathf.Floor(rooms[i].center.x), Mathf.Floor(rooms[i].center.y));
+            Vector2 corner = new Vector2(end.x, start.y);
+            
+            Debug.DrawLine(new Vector3(start.x*spawnInterval*2, 0, start.y * spawnInterval*2),
+                new Vector3(end.x * spawnInterval*2, 0, end.y * spawnInterval*2),
+                Color.black,
+                5f,
+                false);
 
             //make a horizontal coridor
-            coridors.Add(new Line(rooms[i - 1].center, corner, true));
+            coridors.Add(new Line(start, corner, true));
             //then make the vertical component
-            coridors.Add(new Line(corner, rooms[i].center, false));
+            coridors.Add(new Line(corner, end, false));
         }
         //write to the cells.
         foreach (Line coridor in coridors)
@@ -262,36 +273,45 @@ public class BSGenerator : MonoBehaviour
             {
                 int y = (int)coridor.O1.y;
 
-                //need to re think because it's gonna not work at starts and ends as it dosn't know what coridor's connected to what
+                bool isIncreasing = coridor.O1.x < coridor.O2.x;
 
-                cells[(int)coridor.O1.x * 2 - 1, y * 2 - 1] = 0;
-                cells[(int)coridor.O1.x * 2 - 1, y * 2] = 0;
-                cells[(int)coridor.O1.x * 2 - 1, y * 2 + 1] = 0;
-                cells[(int)coridor.O1.x * 2, y * 2 - 1] = 0;
-                cells[(int)coridor.O1.x * 2, y * 2] = 0;
-                cells[(int)coridor.O1.x * 2, y * 2 + 1] = 0;
-                cells[(int)coridor.O1.x * 2 + 1, y * 2 + 1] = 0;
-                cells[(int)coridor.O1.x * 2 + 1, y * 2] = 0;
-                cells[(int)coridor.O1.x * 2 + 1, y * 2 - 1] = 0;
-
-                for (int x = (int)coridor.O1.x+1; x < coridor.O2.x-1; x++)
+                if (isIncreasing)
                 {
-                    cells[x * 2-1, y * 2-1] = 1;
-                    cells[x * 2-1, y * 2] = 0;
-                    cells[x * 2-1, y * 2+1] = 1;
-                    cells[x * 2, y * 2-1] = 1;
-                    cells[x * 2, y * 2] = 0;
-                    cells[x * 2, y * 2+1] = 1;
-                    cells[x * 2+1, y * 2-1] = 1;
-                    cells[x * 2+1, y * 2] = 0;
-                    cells[x * 2+1, y * 2+1] = 1;
+                    for (int x = (int)coridor.O1.x; x < coridor.O2.x; x++)
+                    {
+                        cells[x * 2 + 1, y * 2 + 1] = 0;
+                        cells[x * 2 + 2, y * 2 + 1] = 0;
+                    }
+                }
+                else
+                {
+                    for (int x = (int)coridor.O1.x; x > coridor.O2.x; x--)
+                    {
+                        cells[x * 2 + 1, y * 2 + 1] = 0;
+                        cells[x * 2, y * 2 + 1] = 0;
+                    }
                 }
             }
             else
             {
-                for (int y = (int)coridor.O1.y; y < coridor.O2.y; y++)
-                {
+                int x = (int)coridor.O1.x;
 
+                bool isIncreasing = coridor.O1.y < coridor.O2.y;
+                if (isIncreasing)
+                {
+                    for (int y = (int)coridor.O1.y; y < coridor.O2.y; y++)
+                    {
+                        cells[x * 2 + 1, y * 2 + 1] = 0;
+                        cells[x * 2 + 1, y * 2 + 2] = 0;
+                    }
+                }
+                else
+                {
+                    for (int y = (int)coridor.O1.y; y > coridor.O2.y; y--)
+                    {
+                        cells[x * 2 + 1, y * 2 + 1] = 0;
+                        cells[x * 2 + 1, y * 2] = 0;
+                    }
                 }
             }
         }
@@ -344,13 +364,13 @@ public class BSGenerator : MonoBehaviour
                 //big cells
                 else
                 {
-                    if (_cells[x, y] == 15)
+                    if (_cells[x, y] == 0)
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Filler], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Floor], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
                     }
                     else
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Floor], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Filler], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
                     }
                 }
                 spawnedTiles.Add(spawnedTile);
