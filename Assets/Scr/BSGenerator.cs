@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 // work on it and design it on paper
@@ -25,7 +26,7 @@ just set the big tiles a state, set the medium and small tiles around the big on
 
 public class BSGenerator : MonoBehaviour
 {
-
+    #region Public Fields
     [Header("Helper")]
     public Tile availableTiles;
 
@@ -51,14 +52,19 @@ public class BSGenerator : MonoBehaviour
     public const int BIG_TILE_WIDTH = 40;
     public const int SMALL_TILE_WIDTH = 10;
 
-    #region Private_Variables
-    private int spawnInterval;
+    [Header("Gameplay Assets")]
+    public GameObject PlayerPrefab;
+
+    public static int SPAWN_INTERVAL;
+    #endregion
+    #region Private Fields
 
     private List<Rect> rooms = new List<Rect>();
     private List<Line> coridors = new List<Line>();
     private List<GameObject> spawnedTiles = new List<GameObject>();
     private int[,] cells;//bit flag for cardinal the wall is on NESW 8421
 
+    private GameObject player;
     #endregion
 
     /*
@@ -68,11 +74,28 @@ public class BSGenerator : MonoBehaviour
 
     void Start()
     {
-        spawnInterval = BIG_TILE_WIDTH / 2 + SMALL_TILE_WIDTH / 2;
+        SPAWN_INTERVAL = BIG_TILE_WIDTH / 2 + SMALL_TILE_WIDTH / 2;
+        FullSpawn();
+        AddPlayer();
+        //AddExit();
+        //AddEnemies();
+    }
 
-        //MakeEmptyRoom();
-        //InnitCells(out cells);
-        //AddRooms(ref cells);
+    private void AddExit()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void AddPlayer()
+    {
+        Vector3 playerSpawn = new Vector3((Mathf.Floor(rooms[0].center.x) * 2 + 1) * SPAWN_INTERVAL, 0, (Mathf.Floor(rooms[0].center.y) * 2 + 1) * SPAWN_INTERVAL);
+        player = (GameObject)Instantiate(PlayerPrefab, playerSpawn + (Vector3.up * 5), Quaternion.identity);
+        player.name = "Player";
+    }
+
+    private void AddEnemies()
+    {
+        throw new NotImplementedException();
     }
 
     #region Spawn_Buttons
@@ -180,10 +203,10 @@ public class BSGenerator : MonoBehaviour
             int tries = maxRoomTries;
             while (tries > 0)
             {
-                int xPos = Random.Range(0, width - minRoomSize);
-                int yPos = Random.Range(0, height - minRoomSize);
-                int roomWidth = Random.Range(minRoomSize, maxRoomSize);
-                int roomHeight = Random.Range(minRoomSize, maxRoomSize);
+                int xPos = UnityEngine.Random.Range(0, width - minRoomSize);
+                int yPos = UnityEngine.Random.Range(0, height - minRoomSize);
+                int roomWidth = UnityEngine.Random.Range(minRoomSize, maxRoomSize);
+                int roomHeight = UnityEngine.Random.Range(minRoomSize, maxRoomSize);
 
                 Rect newRoom = new Rect(xPos, yPos, roomWidth, roomHeight);
 
@@ -254,8 +277,8 @@ public class BSGenerator : MonoBehaviour
             Vector2 end = new Vector2(Mathf.Floor(rooms[i].center.x), Mathf.Floor(rooms[i].center.y));
             Vector2 corner = new Vector2(end.x, start.y);
             
-            Debug.DrawLine(new Vector3(start.x*spawnInterval*2, 0, start.y * spawnInterval*2),
-                new Vector3(end.x * spawnInterval*2, 0, end.y * spawnInterval*2),
+            Debug.DrawLine(new Vector3(start.x*SPAWN_INTERVAL*2, 0, start.y * SPAWN_INTERVAL*2),
+                new Vector3(end.x * SPAWN_INTERVAL*2, 0, end.y * SPAWN_INTERVAL*2),
                 Color.black,
                 5f,
                 false);
@@ -329,11 +352,11 @@ public class BSGenerator : MonoBehaviour
                 {
                     if (_cells[x, y] == 0)
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Small_Floor], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Small_Floor], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.identity);
                     }
                     else
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Small_Pillar], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Small_Pillar], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.identity);
                     }
                 }
 
@@ -342,22 +365,22 @@ public class BSGenerator : MonoBehaviour
                 {
                     if (_cells[x, y] == 0)
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Floor], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.Euler(0f, 90f, 0f));
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Floor], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.Euler(0f, 90f, 0f));
                     }
                     else
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Wall], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.Euler(0f, 90f, 0f));
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Wall], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.Euler(0f, 90f, 0f));
                     }
                 }
                 else if (y % 2 == 0)
                 {
                     if (_cells[x, y] == 0)
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Floor], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.Euler(0f, 0f, 0f));
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Floor], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.Euler(0f, 0f, 0f));
                     }
                     else
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Wall], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.Euler(0f, 0f, 0f));
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Med_Wall], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.Euler(0f, 0f, 0f));
                     }
                 }
 
@@ -366,11 +389,11 @@ public class BSGenerator : MonoBehaviour
                 {
                     if (_cells[x, y] == 0)
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Floor], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Floor], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.identity);
                     }
                     else
                     {
-                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Filler], new Vector3(x * spawnInterval, 0, y * spawnInterval), Quaternion.identity);
+                        spawnedTile = (GameObject)Instantiate(tilePrefab[(int)Tile.Big_Filler], new Vector3(x * SPAWN_INTERVAL, 0, y * SPAWN_INTERVAL), Quaternion.identity);
                     }
                 }
                 spawnedTiles.Add(spawnedTile);
