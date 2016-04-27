@@ -38,7 +38,13 @@ public class Player : MonoBehaviour {
 
     private void ActionRight()
     {
-        if (!Physics.Raycast(transform.position, Vector3.right, BSGenerator.SPAWN_INTERVAL * 2))
+        RaycastHit ray;
+        if (Physics.Raycast(transform.position, Vector3.right, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        {
+            if (ray.collider.tag == "Exit")
+                transform.position += Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
+        }
+        else
         {
             transform.position += Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
         }
@@ -46,7 +52,13 @@ public class Player : MonoBehaviour {
 
     private void ActionLeft()
     {
-        if (!Physics.Raycast(transform.position, -Vector3.right, BSGenerator.SPAWN_INTERVAL * 2))
+        RaycastHit ray;
+        if (Physics.Raycast(transform.position, -Vector3.right, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        {
+            if (ray.collider.tag == "Exit")
+                transform.position -= Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
+        }
+        else
         {
             transform.position -= Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
         }
@@ -54,15 +66,28 @@ public class Player : MonoBehaviour {
 
     private void ActionDown()
     {
-        if (!Physics.Raycast(transform.position, -Vector3.forward, BSGenerator.SPAWN_INTERVAL * 2))
+        RaycastHit ray;
+        if (Physics.Raycast(transform.position, -Vector3.forward, out ray,BSGenerator.SPAWN_INTERVAL * 2))
         {
+            if (ray.collider.tag == "Exit")
+                transform.position -= Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
+        }
+        else
+        {
+
             transform.position -= Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionUp()
     {
-        if (!Physics.Raycast(transform.position, Vector3.forward, BSGenerator.SPAWN_INTERVAL * 2))
+        RaycastHit ray;
+        if (Physics.Raycast(transform.position, Vector3.forward, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        {
+            if (ray.collider.tag == "Exit")
+                transform.position += Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
+        }
+        else
         {
             transform.position += Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
         }

@@ -66,6 +66,7 @@ public class BSGenerator : MonoBehaviour
     private int[,] cells;//bit flag for cardinal the wall is on NESW 8421
 
     private GameObject player;
+    private GameObject exit;
     #endregion
 
     /*
@@ -78,13 +79,15 @@ public class BSGenerator : MonoBehaviour
         SPAWN_INTERVAL = BIG_TILE_WIDTH / 2 + SMALL_TILE_WIDTH / 2;
         FullSpawn();
         AddPlayer();
-        //AddExit();
+        AddExit();
         //AddEnemies();
     }
 
     private void AddExit()
     {
-        throw new NotImplementedException();
+        Vector3 exitSpawn = new Vector3((Mathf.Floor(rooms[rooms.Count - 1].center.x) * 2 + 1) * SPAWN_INTERVAL, 0, (Mathf.Floor(rooms[rooms.Count - 1].center.y) * 2 + 1) * SPAWN_INTERVAL);
+        exit = (GameObject)Instantiate(ExitPrefab, exitSpawn, Quaternion.Euler(-90f, 0, 0));
+        exit.name = "Exit";
     }
 
     private void AddPlayer()
