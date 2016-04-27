@@ -59,15 +59,22 @@ public class BSGenerator : MonoBehaviour
     public static int SPAWN_INTERVAL;
     #endregion
     #region Private Fields
+    private int level;
 
+    private int[,] cells;//is this cell a wall?
     private List<Rect> rooms = new List<Rect>();
     private List<Line> coridors = new List<Line>();
     private List<GameObject> spawnedTiles = new List<GameObject>();
-    private int[,] cells;//bit flag for cardinal the wall is on NESW 8421
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
+
+    private GameObject DungeonHolder;
 
     private GameObject player;
     private GameObject exit;
+
     #endregion
+
+    public int Level { get { return level; } }
 
     /*
     button to press that makes a big room.
@@ -76,7 +83,22 @@ public class BSGenerator : MonoBehaviour
 
     void Start()
     {
+        DungeonHolder = new GameObject("Dungeon");
         SPAWN_INTERVAL = BIG_TILE_WIDTH / 2 + SMALL_TILE_WIDTH / 2;
+        level = 1;
+        GenerateSimpleDungeon();
+    }
+
+    public void SpawnNextDungeon()
+    {
+        //destroy the preveous dungeon
+        DeleteGrid();
+        GenerateSimpleDungeon();
+        level++;
+    }
+
+    private void GenerateSimpleDungeon()
+    {
         FullSpawn();
         AddPlayer();
         AddExit();
@@ -86,15 +108,35 @@ public class BSGenerator : MonoBehaviour
     private void AddExit()
     {
         Vector3 exitSpawn = new Vector3((Mathf.Floor(rooms[rooms.Count - 1].center.x) * 2 + 1) * SPAWN_INTERVAL, 0, (Mathf.Floor(rooms[rooms.Count - 1].center.y) * 2 + 1) * SPAWN_INTERVAL);
-        exit = (GameObject)Instantiate(ExitPrefab, exitSpawn, Quaternion.Euler(-90f, 0, 0));
-        exit.name = "Exit";
+        if (exit == null)
+        {
+            //place the exit
+            exit = (GameObject)Instantiate(ExitPrefab, exitSpawn, Quaternion.Euler(-90f, 0, 0));
+            exit.name = "Exit";
+        }
+        else
+        {
+            //place the exit again
+            exit.transform.position = exitSpawn;
+        }
     }
 
     private void AddPlayer()
     {
         Vector3 playerSpawn = new Vector3((Mathf.Floor(rooms[0].center.x) * 2 + 1) * SPAWN_INTERVAL, 0, (Mathf.Floor(rooms[0].center.y) * 2 + 1) * SPAWN_INTERVAL);
-        player = (GameObject)Instantiate(PlayerPrefab, playerSpawn + (Vector3.up * 5), Quaternion.identity);
-        player.name = "Player";
+        if (player == null)
+        {
+            //place the player
+            player = (GameObject)Instantiate(PlayerPrefab, playerSpawn + (Vector3.up * 10), Quaternion.identity);
+            player.name = "Player";
+            player.GetComponent<Player>().Generator = this;
+            player.GetComponent<Player>().InitNewPlayerCharacter();
+        }
+        else
+        {
+            //place the player again
+            player.transform.position = playerSpawn + (Vector3.up * 10);
+        }
     }
 
     private void AddEnemies()
@@ -105,11 +147,12 @@ public class BSGenerator : MonoBehaviour
     #region Spawn_Buttons
     public void DeleteGrid()
     {
-        foreach (GameObject currentTile in spawnedTiles)
+        for (int i = 0; i < DungeonHolder.transform.childCount; i++)
         {
-            Destroy(currentTile);
+            Destroy(DungeonHolder.transform.GetChild(i).gameObject);
         }
         spawnedTiles = new List<GameObject>();
+        spawnedEnemies = new List<GameObject>();
         rooms = new List<Rect>();
         coridors = new List<Line>();
     }
@@ -402,6 +445,7 @@ public class BSGenerator : MonoBehaviour
                 }
                 spawnedTiles.Add(spawnedTile);
                 spawnedTile.name = "(" + x + ", " + y + ") Exits: " + _cells[x, y];
+                spawnedTile.transform.SetParent(DungeonHolder.transform);
             }
         }
     }

@@ -5,6 +5,6 @@ using System.Text;
 
 abstract class Clothing : Item
 {
-    protected DamageType resistanceTypes;
-    protected int resistance;
+    protected DamageTypes resistanceTypes;
+    protected float resistance;
 }

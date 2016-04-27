@@ -14,20 +14,44 @@ class Boots : Clothing
     //they also allow you to make more moves in your turn
 
     private int dodge;
-    private int speed;//number of spaces you can move in a turn (depending on the dungeon level)
+    private int grip;
+
+    public DamageTypes Resistances
+    {
+        get
+        {
+            return resistanceTypes;
+        }
+    }
+
+    public float Resistance
+    {
+        get
+        {
+            return resistance;
+        }
+    }
+
+    public int Dodge
+    {
+        get
+        {
+            return dodge;
+        }
+    }
 
     public Boots()
     {
         dodge = 0;
-        speed = 0;
+        grip = 0;
         resistanceTypes = 0;
         resistance = 0;
     }
 
-    public Boots (int _dodge, int _speed, DamageType _resistanceTypes, int _resistance)
+    public Boots (int _dodge, int _grip, DamageTypes _resistanceTypes, float _resistance)
     {
         dodge = _dodge;
-        speed = _speed;
+        grip = _grip;
         resistanceTypes = _resistanceTypes;
         resistance = _resistance;
     }
