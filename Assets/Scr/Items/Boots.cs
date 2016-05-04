@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+[Serializable]
 class Boots : Clothing
 {
 
@@ -54,5 +54,10 @@ class Boots : Clothing
         grip = _grip;
         resistanceTypes = _resistanceTypes;
         resistance = _resistance;
+    }
+
+    public override string ToString()
+    {
+        return "Boots| Dodge: " + dodge + ", Grip: " + grip + ", Res: " + resistance.ToString("N2") + " " + resistanceTypes.ToString() + "\n";
     }
 }

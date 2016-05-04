@@ -9,7 +9,8 @@ public struct RogueInput
         {"up", KeyCode.UpArrow },
         {"down", KeyCode.DownArrow },
         {"left", KeyCode.LeftArrow },
-        {"right", KeyCode.RightArrow }
+        {"right", KeyCode.RightArrow },
+        {"inventory", KeyCode.I }
     };
 
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GUI_DungeonLevelDisplay : MonoBehaviour
 {
     
-    public BSGenerator Generator;
+    public Generator Generator;
 
     private Text _Text;
 

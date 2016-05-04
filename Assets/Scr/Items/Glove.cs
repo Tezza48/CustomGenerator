@@ -11,6 +11,7 @@ public enum DamageTypes
     Ice = 4
 };
 
+[Serializable]
 class Glove : Clothing
 {
     /*
@@ -75,5 +76,10 @@ class Glove : Clothing
         ranged = _ranged;
         resistanceTypes = _resistanceTypes;
         resistance = _resistance;
+    }
+
+    public override string ToString()
+    {
+        return "Glove| Damage: " + damage + ((ranged) ? ", Ranged " : " ") + DamageType.ToString() + ", Res: " + resistance.ToString("N2") + " " + resistanceTypes.ToString() + "\n";
     }
 }

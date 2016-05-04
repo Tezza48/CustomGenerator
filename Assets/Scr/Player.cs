@@ -5,7 +5,7 @@ using System;
 public class Player : MonoBehaviour
 {
 
-    private BSGenerator generator;
+    private Generator generator;
 
     private Glove gloveL;
     private Glove gloveR;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private const float startingResistance = 1.1f;
 
     #region Properties
-    public BSGenerator Generator { set { generator = value; } }
+    public Generator Generator { set { generator = value; } }
 
     #region Stats
     private int Damage { get { return gloveL.Damage + gloveR.Damage + damage; } }
@@ -62,12 +62,22 @@ public class Player : MonoBehaviour
         {
             ActionRight();
         }
+        else if (Input.GetKeyUp(RogueInput.buttons["inventory"]))
+        {
+            PrintInventory();
+        }
+    }
+
+    private void PrintInventory()
+    {
+        string items = gloveL.ToString() + gloveR.ToString() + boots.ToString() + Inventory.ToString();
+        Debug.Log(items);
     }
 
     internal void InitNewPlayerCharacter()
     {
-        gloveL = new Glove(DamageTypes.Physical, 1, false, DamageTypes.Physical, 0);
-        gloveR = new Glove(DamageTypes.Physical, 1, false, DamageTypes.Physical, 0);
+        gloveL = new Glove(DamageTypes.Physical, 1, false, DamageTypes.Physical | DamageTypes.Fire, 0);
+        gloveR = new Glove(DamageTypes.Physical, 1, true, DamageTypes.Physical, 0);
 
         boots = new Boots(1, 1, DamageTypes.Physical, 1);
 
@@ -78,57 +88,57 @@ public class Player : MonoBehaviour
     private void ActionRight()
     {
         RaycastHit ray;
-        if (Physics.Raycast(transform.position, Vector3.right, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (Physics.Raycast(transform.position, Vector3.right, out ray, Generator.SPAWN_INTERVAL * 2))
         {
             if (ray.collider.tag == "Exit")
-                transform.position += Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
+                transform.position += Vector3.right * Generator.SPAWN_INTERVAL * 2;
         }
         else
         {
-            transform.position += Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
+            transform.position += Vector3.right * Generator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionLeft()
     {
         RaycastHit ray;
-        if (Physics.Raycast(transform.position, -Vector3.right, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (Physics.Raycast(transform.position, -Vector3.right, out ray, Generator.SPAWN_INTERVAL * 2))
         {
             if (ray.collider.tag == "Exit")
-                transform.position -= Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
+                transform.position -= Vector3.right * Generator.SPAWN_INTERVAL * 2;
         }
         else
         {
-            transform.position -= Vector3.right * BSGenerator.SPAWN_INTERVAL * 2;
+            transform.position -= Vector3.right * Generator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionDown()
     {
         RaycastHit ray;
-        if (Physics.Raycast(transform.position, -Vector3.forward, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (Physics.Raycast(transform.position, -Vector3.forward, out ray, Generator.SPAWN_INTERVAL * 2))
         {
             if (ray.collider.tag == "Exit")
-                transform.position -= Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
+                transform.position -= Vector3.forward * Generator.SPAWN_INTERVAL * 2;
         }
         else
         {
 
-            transform.position -= Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
+            transform.position -= Vector3.forward * Generator.SPAWN_INTERVAL * 2;
         }
     }
 
     private void ActionUp()
     {
         RaycastHit ray;
-        if (Physics.Raycast(transform.position, Vector3.forward, out ray, BSGenerator.SPAWN_INTERVAL * 2))
+        if (Physics.Raycast(transform.position, Vector3.forward, out ray, Generator.SPAWN_INTERVAL * 2))
         {
             if (ray.collider.tag == "Exit")
-                transform.position += Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
+                transform.position += Vector3.forward * Generator.SPAWN_INTERVAL * 2;
         }
         else
         {
-            transform.position += Vector3.forward * BSGenerator.SPAWN_INTERVAL * 2;
+            transform.position += Vector3.forward * Generator.SPAWN_INTERVAL * 2;
         }
     }
     #endregion
