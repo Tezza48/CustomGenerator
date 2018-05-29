@@ -53,6 +53,7 @@ public class BSGenerator : MonoBehaviour
     public const int SMALL_TILE_WIDTH = 10;
 
     #region Private_Variables
+    private int seed;
     private int spawnInterval;
 
     private List<Rect> rooms = new List<Rect>();
@@ -77,11 +78,11 @@ public class BSGenerator : MonoBehaviour
     }
 
     #region Spawn_UI
-    public void SetSeed(InputField seed)
+    public void SetSeed(InputField input)
     {
         int iseed;
-        if (int.TryParse(seed.text, out iseed))
-            Random.InitState(iseed);
+        if (int.TryParse(input.text, out iseed))
+            seed = iseed;
     }
 
     public void SetRooms(Slider slider)
@@ -99,6 +100,7 @@ public class BSGenerator : MonoBehaviour
 
     public void DeleteGrid()
     {
+        Random.InitState(seed);
         foreach (GameObject currentTile in spawnedTiles)
         {
             Destroy(currentTile);
