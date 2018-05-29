@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // work on it and design it on paper
 
@@ -75,7 +76,27 @@ public class BSGenerator : MonoBehaviour
         //AddRooms(ref cells);
     }
 
-    #region Spawn_Buttons
+    #region Spawn_UI
+    public void SetSeed(InputField seed)
+    {
+        int iseed;
+        if (int.TryParse(seed.text, out iseed))
+            Random.InitState(iseed);
+    }
+
+    public void SetRooms(Slider slider)
+    {
+        maxRooms = (int)slider.value;
+    }
+    public void SetMinSize(Slider slider)
+    {
+        minRoomSize = (int)slider.value;
+    }
+    public void SetMaxSize(Slider slider)
+    {
+        maxRoomSize = (int)slider.value;
+    }
+
     public void DeleteGrid()
     {
         foreach (GameObject currentTile in spawnedTiles)
